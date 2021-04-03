@@ -13,7 +13,7 @@ pub struct Field{
 }
 
 pub struct Food{
-    position: [i32, 2],
+    position: [i32; 2],
 
 }
 
