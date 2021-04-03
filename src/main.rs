@@ -11,6 +11,10 @@ pub struct Field{
     size: [i32; 2]
 }
 
+pub struct Food{
+    position: [i32, 2],
+
+}
 
 fn main() {
 }
