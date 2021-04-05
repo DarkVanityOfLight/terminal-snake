@@ -31,10 +31,11 @@ impl Field{
     fn draw(& self){
         let repeated: String = iter::repeat("#").take(self.size[1] + 2).collect();
         println!("{}", repeated);
-        for _ in 0..self.size[0]{
+        for row in 0..self.size[0]{
             print!("#");
-            let repeated: String = iter::repeat(" ").take(self.size[1]).collect();
-            print!("{}", repeated);
+            for column in 0..self.size[1]{
+                print!(" ")
+            }
             println!("#");
         }
         println!("{}", repeated);
