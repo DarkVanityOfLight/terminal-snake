@@ -7,7 +7,7 @@ pub struct Snake{
 }
 
 pub struct Field{
-    size: [i32; 2],
+    size: [usize; 2],
     player: Snake,
     current_food: Food,
 }
@@ -19,7 +19,7 @@ pub struct Food{
 
 impl Field{
 
-    fn new(size: [i32; 2], player: Snake, starting_food: Food) -> Field{
+    fn new(size: [usize; 2], player: Snake, starting_food: Food) -> Field{
         Field{
             size: size,
             player: player,
