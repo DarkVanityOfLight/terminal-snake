@@ -3,8 +3,8 @@ use std::thread::sleep;
 use std::iter;
 
 pub struct Snake{
-    head_position: [i32; 2],
-    body: Vec<[i32; 2]>,
+    head_position: [usize; 2],
+    body: Vec<[usize; 2]>,
 }
 
 pub struct Field{
@@ -14,7 +14,7 @@ pub struct Field{
 }
 
 pub struct Food{
-    position: [i32; 2],
+    position: [usize; 2],
 
 }
 
