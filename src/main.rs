@@ -1,5 +1,6 @@
 use std::time::Duration;
 use std::thread::sleep;
+use std::iter;
 
 pub struct Snake{
     head_position: [i32; 2],
@@ -28,6 +29,15 @@ impl Field{
     }
 
     fn draw(& self){
+        let repeated: String = iter::repeat("#").take(self.size[1] + 2).collect();
+        println!("{}", repeated);
+        for _ in 0..self.size[0]{
+            print!("#");
+            let repeated: String = iter::repeat(" ").take(self.size[1]).collect();
+            print!("{}", repeated);
+            println!("#");
+        }
+        println!("{}", repeated);
         println!("{}", self.size[0]);
         println!("{}", self.size[1]);
 
