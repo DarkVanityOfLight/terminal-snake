@@ -34,7 +34,16 @@ impl Field{
         for row in 0..self.size[0]{
             print!("#");
             for column in 0..self.size[1]{
-                print!(" ")
+                let current_position = [row, column];
+
+                if self.player.body.contains(&current_position){
+                    print!("+");
+                }else if self.player.head_position == current_position{
+                    print!("=");
+                }
+                else{
+                    print!(" ");
+                }
             }
             println!("#");
         }
