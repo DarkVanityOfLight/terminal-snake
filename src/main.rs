@@ -17,5 +17,22 @@ pub struct Food{
 
 }
 
+impl Field{
+
+    fn new(size: [i32; 2], player: Snake, starting_food: Food) -> Field{
+        Field{
+            size: size,
+            player: player,
+            current_food: starting_food,
+        }
+    }
+
+    fn draw(& self){
+        println!("{}", self.size[0]);
+        println!("{}", self.size[1]);
+
+    }
+}
+
 fn main() {
 }
