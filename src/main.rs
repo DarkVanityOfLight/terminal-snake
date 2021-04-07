@@ -9,7 +9,7 @@ pub struct Snake{
 
 pub struct Field{
     size: [usize; 2],
-    player: Snake,
+    player: *const Snake,
     current_food: Food,
 }
 
@@ -20,7 +20,7 @@ pub struct Food{
 
 impl Field{
 
-    fn new(size: [usize; 2], player: Snake, starting_food: Food) -> Field{
+    fn new(size: [usize; 2], player: *const Snake, starting_food: Food) -> Field{
         Field{
             size: size,
             player: player,
@@ -35,14 +35,15 @@ impl Field{
             print!("#");
             for column in 0..self.size[1]{
                 let current_position = [row, column];
-
-                if self.player.body.contains(&current_position){
-                    print!("+");
-                }else if self.player.head_position == current_position{
-                    print!("=");
-                }
-                else{
-                    print!(" ");
+                unsafe {
+                    if (*self.player).body.contains(&current_position){
+                        print!("+");
+                    }else if (*self.player).head_position == current_position{
+                        print!("=");
+                    }
+                    else{
+                        print!(" ");
+                    }
                 }
             }
             println!("#");
