@@ -55,5 +55,29 @@ impl Field{
     }
 }
 
+impl Snake{
+
+    fn new(head_position: [usize; 2]) -> Snake{
+        Snake{
+            head_position: head_position,
+            body: Vec::new(),
+        }
+    }
+
+    fn mov(&mut self, direction: &str){
+       
+        if direction == "UP"{
+            self.head_position[1] += 1;
+        }else if direction == "DOWN"{
+            self.head_position[1] -= 1;
+        }else if direction == "LEFT"{
+            self.head_position[0] -= 1;
+        }else if direction == "RIGHT"{
+            self.head_position[0] += 1;
+        }
+
+    }
+}
+
 fn main() {
 }
