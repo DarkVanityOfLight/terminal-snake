@@ -85,5 +85,51 @@ impl Snake{
     }
 }
 
+fn valid_action(action: &str, last_action: &str) -> bool{
+    if action == "UP"{
+        return last_action != "DOWN"
+    }else if action == "DOWN"{
+        return last_action != "UP"
+    }else if action == "LEFT"{
+        return last_action != "RIGHT"
+    }else if action == "RIGHT"{
+        return last_action != "LEFT"
+    }else{
+        return false
+    }
+}
+
+fn input_handler(player: *mut Snake, mut last_action: &mut String){
+
+    let k = io::stdin().bytes().next().unwrap();
+        
+    let pressed_key = k.unwrap() as char;
+    let mut action;
+
+    // Check what we direction have to go
+    if pressed_key == 'w'{
+        action = "UP";
+    }else if pressed_key == 's'{
+        action = "DOWN";
+    }else if pressed_key == 'a'{
+        action = "LEFT";
+    }else if pressed_key == 'd'{
+        action = "RIGHT";
+    }else{
+        action = last_action;
+    }
+
+
+    if !valid_action(&action, &last_action){
+        action = last_action;
+    }
+
+    unsafe {
+        (*player).mov(&action);
+    }
+    *last_action = action.to_string();
+
+}
+
 fn main() {
 }
