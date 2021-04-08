@@ -72,15 +72,14 @@ impl Snake{
     }
 
     fn mov(&mut self, direction: &str){
-       
         if direction == "UP"{
-            self.head_position[1] += 1;
-        }else if direction == "DOWN"{
-            self.head_position[1] -= 1;
-        }else if direction == "LEFT"{
             self.head_position[0] -= 1;
-        }else if direction == "RIGHT"{
+        }else if direction == "DOWN"{
             self.head_position[0] += 1;
+        }else if direction == "LEFT"{
+            self.head_position[1] -= 1;
+        }else if direction == "RIGHT"{
+            self.head_position[1] += 1;
         }
 
     }
