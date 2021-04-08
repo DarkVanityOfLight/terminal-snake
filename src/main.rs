@@ -94,16 +94,25 @@ fn valid_action(action: &str, last_action: &str) -> bool{
         return last_action != "RIGHT"
     }else if action == "RIGHT"{
         return last_action != "LEFT"
+    }else if action == "QUIT"{
+        return true
     }else{
         return false
     }
 }
 
+fn to_ctrl_byte(c: char) -> u8{
+    let byte = c as u8;
+    byte & 0b0001_1111
+
+}
+
 fn input_handler(player: *mut Snake, mut last_action: &mut String){
 
     let k = io::stdin().bytes().next().unwrap();
-        
-    let pressed_key = k.unwrap() as char;
+    let b  = k.unwrap();
+    
+    let pressed_key = b as char;
     let mut action;
 
     // Check what we direction have to go
@@ -115,6 +124,10 @@ fn input_handler(player: *mut Snake, mut last_action: &mut String){
         action = "LEFT";
     }else if pressed_key == 'd'{
         action = "RIGHT";
+    }else if b == to_ctrl_byte('q'){
+        action = "QUIT";
+        *last_action = action.to_string();
+        return
     }else{
         action = last_action;
     }
