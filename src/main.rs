@@ -34,10 +34,10 @@ impl Field{
     fn draw(& self){
         let repeated: String = iter::repeat("#").take(self.size[1] + 2).collect();
         print!("{}\r\n", repeated);
-        for row in 0..self.size[0]{
+        for x in 0..self.size[0]{
             print!("#");
-            for column in 0..self.size[1]{
-                let current_position = [row, column];
+            for y in 0..self.size[1]{
+                let current_position = [x, y];
                 unsafe {
                     if (*self.player).body.contains(&current_position){
                         print!("+");
@@ -54,7 +54,10 @@ impl Field{
         print!("{}\r\n", repeated);
         print!("{}\r\n", self.size[0]);
         print!("{}\r\n", self.size[1]);
-
+        unsafe {
+            print!("{}\r\n", (*self.player).head_position[0]);
+            print!("{}\r\n", (*self.player).head_position[1]);
+        }
 
     }
 }
