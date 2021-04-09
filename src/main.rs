@@ -4,6 +4,8 @@ use std::thread::sleep;
 use std::iter;
 use std::io::{self, stdout, Read};
 use termion::raw::IntoRawMode; 
+use termion::raw::RawTerminal;
+use std::convert::TryFrom;
 
 pub struct Snake{
     head_position: [usize; 2],
@@ -32,17 +34,19 @@ impl Field{
     }
 
     fn draw(& self){
-        let repeated: String = iter::repeat("#").take(self.size[1] + 2).collect();
+        let repeated: String = iter::repeat("#").take(self.size[0] + 2).collect();
         print!("{}\r\n", repeated);
-        for x in 0..self.size[0]{
+        for y in 0..self.size[1]{
             print!("#");
-            for y in 0..self.size[1]{
+            for x in 0..self.size[0]{
                 let current_position = [x, y];
                 unsafe {
                     if (*self.player).body.contains(&current_position){
                         print!("+");
                     }else if (*self.player).head_position == current_position{
                         print!("=");
+                    }else if self.current_food.position == current_position{
+                        print!("*")
                     }
                     else{
                         print!(" ");
@@ -71,16 +75,32 @@ impl Snake{
         }
     }
 
-    fn mov(&mut self, direction: &str){
+    fn mov(&mut self, direction: &str, size_x: usize, size_y: usize) -> bool{
+        let head_x = i64::try_from(self.head_position[0]).unwrap();
+        let head_y = i64::try_from(self.head_position[1]).unwrap();
         if direction == "UP"{
-            self.head_position[0] -= 1;
+            if head_y != 0{
+                self.head_position[1] -= 1;
+                return true
+            }
         }else if direction == "DOWN"{
-            self.head_position[0] += 1;
+            if self.head_position[1] + 1< size_y{
+                self.head_position[1] += 1;
+                return true
+            }
         }else if direction == "LEFT"{
-            self.head_position[1] -= 1;
+            if head_x != 0{
+                self.head_position[0] -= 1;
+                return true
+            }
         }else if direction == "RIGHT"{
-            self.head_position[1] += 1;
+            if self.head_position[0] + 1 < size_x{
+                self.head_position[0] += 1;
+                return true
+            }
         }
+
+        return false
 
     }
 }
