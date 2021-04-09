@@ -124,7 +124,7 @@ fn input_handler(player: *mut Snake, mut last_action: &mut String){
         action = "LEFT";
     }else if pressed_key == 'd'{
         action = "RIGHT";
-    }else if b == to_ctrl_byte('q'){
+    }else if b == to_ctrl_byte('e'){
         action = "QUIT";
         *last_action = action.to_string();
         return
