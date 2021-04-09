@@ -168,5 +168,16 @@ fn input_handler(player: *mut Snake, field: &Field, mut last_action: &mut String
 
 }
 
+fn check_exit<T: std::io::Write>(last_action: &str, _stdout: &RawTerminal<T>){
+    if last_action == "QUIT" || last_action == "LOOSE"{
+        exit(_stdout);
+    }
+}
+
+fn exit<T: std::io::Write>(_stdout: &RawTerminal<T>){
+    _stdout.suspend_raw_mode();
+    std::process::exit(0);
+}
+
 fn main() {
 }
