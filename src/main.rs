@@ -114,7 +114,7 @@ fn valid_action(action: &str, last_action: &str) -> bool{
         return last_action != "RIGHT"
     }else if action == "RIGHT"{
         return last_action != "LEFT"
-    }else if action == "QUIT"{
+    }else if action == "QUIT" || action == "LOOSE"{
         return true
     }else{
         return false
@@ -127,7 +127,7 @@ fn to_ctrl_byte(c: char) -> u8{
 
 }
 
-fn input_handler(player: *mut Snake, mut last_action: &mut String){
+fn input_handler(player: *mut Snake, field: &Field, mut last_action: &mut String){
 
     let k = io::stdin().bytes().next().unwrap();
     let b  = k.unwrap();
@@ -157,8 +157,12 @@ fn input_handler(player: *mut Snake, mut last_action: &mut String){
         action = last_action;
     }
 
+    let result: bool;
     unsafe {
-        (*player).mov(&action);
+        result = (*player).mov(&action, field.size[0], field.size[1]);
+    }
+    if !result{
+        action = "LOOSE";
     }
     *last_action = action.to_string();
 
