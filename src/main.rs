@@ -15,7 +15,7 @@ pub struct Snake{
 pub struct Field{
     size: [usize; 2],
     player: *const Snake,
-    current_food: Food,
+    food: Food,
 }
 
 pub struct Food{
@@ -29,7 +29,7 @@ impl Field{
         Field{
             size: size,
             player: player,
-            current_food: starting_food,
+            food: starting_food,
         }
     }
 
@@ -45,7 +45,7 @@ impl Field{
                         print!("+");
                     }else if (*self.player).head_position == current_position{
                         print!("=");
-                    }else if self.current_food.position == current_position{
+                    }else if self.food.position == current_position{
                         print!("*")
                     }
                     else{
