@@ -7,9 +7,16 @@ use termion::raw::IntoRawMode;
 use termion::raw::RawTerminal;
 use std::convert::TryFrom;
 
+
+pub struct TurnPoint{
+    position: [usize; 2],
+    direction: String,
+}
+
 pub struct Snake{
     head_position: [usize; 2],
     body: Vec<[usize; 2]>,
+    turn_points: Vec<TurnPoint>,
 }
 
 pub struct Field{
@@ -134,6 +141,10 @@ fn input_handler(player: *mut Snake, field: &Field, mut last_action: &mut String
     
     let pressed_key = b as char;
     let mut action;
+    let last_position: [usize; 2];
+    unsafe{
+        last_position = (*player).head_position;
+    }
 
     // Check what we direction have to go
     if pressed_key == 'w'{
@@ -164,8 +175,25 @@ fn input_handler(player: *mut Snake, field: &Field, mut last_action: &mut String
     if !result{
         action = "LOOSE";
     }
-    *last_action = action.to_string();
 
+    // If we move into another direction then the last one we have to add an turnpoint
+    if last_action != action{
+        let turn_point = TurnPoint{
+            position: last_position,
+            direction: action.to_string()
+        };
+        unsafe{
+            (*player).turn_points.push(turn_point);
+        }
+    }
+
+    *last_action = action.to_string();
+   
+    unsafe{
+        if (*player).head_position == field.food.position{
+            (*player).grow();
+        }
+    }
 }
 
 fn check_exit<T: std::io::Write>(last_action: &str, _stdout: &RawTerminal<T>){
